@@ -1,0 +1,82 @@
+[
+{
+  "directory": "/home/pj/pj/VSLAM_BA_with_eigen/build/src",
+  "command": "/usr/bin/c++  -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -DHAVE_EIGEN -DHAVE_GLEW -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"x11\\\" -DUSE_OPENMP -D_LINUX_ -Dmyslam_EXPORTS -I/usr/include/suitesparse -I/home/pj/pj/VSLAM_BA_with_eigen/include -isystem /usr/include/eigen3 -isystem /usr/local/include/opencv  -std=c++14 -Wall -fopenmp -g -fPIC   -o CMakeFiles/myslam.dir/frame.cpp.o -c /home/pj/pj/VSLAM_BA_with_eigen/src/frame.cpp",
+  "file": "/home/pj/pj/VSLAM_BA_with_eigen/src/frame.cpp"
+},
+{
+  "directory": "/home/pj/pj/VSLAM_BA_with_eigen/build/src",
+  "command": "/usr/bin/c++  -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -DHAVE_EIGEN -DHAVE_GLEW -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"x11\\\" -DUSE_OPENMP -D_LINUX_ -Dmyslam_EXPORTS -I/usr/include/suitesparse -I/home/pj/pj/VSLAM_BA_with_eigen/include -isystem /usr/include/eigen3 -isystem /usr/local/include/opencv  -std=c++14 -Wall -fopenmp -g -fPIC   -o CMakeFiles/myslam.dir/mappoint.cpp.o -c /home/pj/pj/VSLAM_BA_with_eigen/src/mappoint.cpp",
+  "file": "/home/pj/pj/VSLAM_BA_with_eigen/src/mappoint.cpp"
+},
+{
+  "directory": "/home/pj/pj/VSLAM_BA_with_eigen/build/src",
+  "command": "/usr/bin/c++  -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -DHAVE_EIGEN -DHAVE_GLEW -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"x11\\\" -DUSE_OPENMP -D_LINUX_ -Dmyslam_EXPORTS -I/usr/include/suitesparse -I/home/pj/pj/VSLAM_BA_with_eigen/include -isystem /usr/include/eigen3 -isystem /usr/local/include/opencv  -std=c++14 -Wall -fopenmp -g -fPIC   -o CMakeFiles/myslam.dir/map.cpp.o -c /home/pj/pj/VSLAM_BA_with_eigen/src/map.cpp",
+  "file": "/home/pj/pj/VSLAM_BA_with_eigen/src/map.cpp"
+},
+{
+  "directory": "/home/pj/pj/VSLAM_BA_with_eigen/build/src",
+  "command": "/usr/bin/c++  -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -DHAVE_EIGEN -DHAVE_GLEW -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"x11\\\" -DUSE_OPENMP -D_LINUX_ -Dmyslam_EXPORTS -I/usr/include/suitesparse -I/home/pj/pj/VSLAM_BA_with_eigen/include -isystem /usr/include/eigen3 -isystem /usr/local/include/opencv  -std=c++14 -Wall -fopenmp -g -fPIC   -o CMakeFiles/myslam.dir/camera.cpp.o -c /home/pj/pj/VSLAM_BA_with_eigen/src/camera.cpp",
+  "file": "/home/pj/pj/VSLAM_BA_with_eigen/src/camera.cpp"
+},
+{
+  "directory": "/home/pj/pj/VSLAM_BA_with_eigen/build/src",
+  "command": "/usr/bin/c++  -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -DHAVE_EIGEN -DHAVE_GLEW -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"x11\\\" -DUSE_OPENMP -D_LINUX_ -Dmyslam_EXPORTS -I/usr/include/suitesparse -I/home/pj/pj/VSLAM_BA_with_eigen/include -isystem /usr/include/eigen3 -isystem /usr/local/include/opencv  -std=c++14 -Wall -fopenmp -g -fPIC   -o CMakeFiles/myslam.dir/config.cpp.o -c /home/pj/pj/VSLAM_BA_with_eigen/src/config.cpp",
+  "file": "/home/pj/pj/VSLAM_BA_with_eigen/src/config.cpp"
+},
+{
+  "directory": "/home/pj/pj/VSLAM_BA_with_eigen/build/src",
+  "command": "/usr/bin/c++  -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -DHAVE_EIGEN -DHAVE_GLEW -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"x11\\\" -DUSE_OPENMP -D_LINUX_ -Dmyslam_EXPORTS -I/usr/include/suitesparse -I/home/pj/pj/VSLAM_BA_with_eigen/include -isystem /usr/include/eigen3 -isystem /usr/local/include/opencv  -std=c++14 -Wall -fopenmp -g -fPIC   -o CMakeFiles/myslam.dir/feature.cpp.o -c /home/pj/pj/VSLAM_BA_with_eigen/src/feature.cpp",
+  "file": "/home/pj/pj/VSLAM_BA_with_eigen/src/feature.cpp"
+},
+{
+  "directory": "/home/pj/pj/VSLAM_BA_with_eigen/build/src",
+  "command": "/usr/bin/c++  -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -DHAVE_EIGEN -DHAVE_GLEW -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"x11\\\" -DUSE_OPENMP -D_LINUX_ -Dmyslam_EXPORTS -I/usr/include/suitesparse -I/home/pj/pj/VSLAM_BA_with_eigen/include -isystem /usr/include/eigen3 -isystem /usr/local/include/opencv  -std=c++14 -Wall -fopenmp -g -fPIC   -o CMakeFiles/myslam.dir/frontend.cpp.o -c /home/pj/pj/VSLAM_BA_with_eigen/src/frontend.cpp",
+  "file": "/home/pj/pj/VSLAM_BA_with_eigen/src/frontend.cpp"
+},
+{
+  "directory": "/home/pj/pj/VSLAM_BA_with_eigen/build/src",
+  "command": "/usr/bin/c++  -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -DHAVE_EIGEN -DHAVE_GLEW -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"x11\\\" -DUSE_OPENMP -D_LINUX_ -Dmyslam_EXPORTS -I/usr/include/suitesparse -I/home/pj/pj/VSLAM_BA_with_eigen/include -isystem /usr/include/eigen3 -isystem /usr/local/include/opencv  -std=c++14 -Wall -fopenmp -g -fPIC   -o CMakeFiles/myslam.dir/backend.cpp.o -c /home/pj/pj/VSLAM_BA_with_eigen/src/backend.cpp",
+  "file": "/home/pj/pj/VSLAM_BA_with_eigen/src/backend.cpp"
+},
+{
+  "directory": "/home/pj/pj/VSLAM_BA_with_eigen/build/src",
+  "command": "/usr/bin/c++  -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -DHAVE_EIGEN -DHAVE_GLEW -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"x11\\\" -DUSE_OPENMP -D_LINUX_ -Dmyslam_EXPORTS -I/usr/include/suitesparse -I/home/pj/pj/VSLAM_BA_with_eigen/include -isystem /usr/include/eigen3 -isystem /usr/local/include/opencv  -std=c++14 -Wall -fopenmp -g -fPIC   -o CMakeFiles/myslam.dir/viewer.cpp.o -c /home/pj/pj/VSLAM_BA_with_eigen/src/viewer.cpp",
+  "file": "/home/pj/pj/VSLAM_BA_with_eigen/src/viewer.cpp"
+},
+{
+  "directory": "/home/pj/pj/VSLAM_BA_with_eigen/build/src",
+  "command": "/usr/bin/c++  -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -DHAVE_EIGEN -DHAVE_GLEW -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"x11\\\" -DUSE_OPENMP -D_LINUX_ -Dmyslam_EXPORTS -I/usr/include/suitesparse -I/home/pj/pj/VSLAM_BA_with_eigen/include -isystem /usr/include/eigen3 -isystem /usr/local/include/opencv  -std=c++14 -Wall -fopenmp -g -fPIC   -o CMakeFiles/myslam.dir/visual_odometry.cpp.o -c /home/pj/pj/VSLAM_BA_with_eigen/src/visual_odometry.cpp",
+  "file": "/home/pj/pj/VSLAM_BA_with_eigen/src/visual_odometry.cpp"
+},
+{
+  "directory": "/home/pj/pj/VSLAM_BA_with_eigen/build/src",
+  "command": "/usr/bin/c++  -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -DHAVE_EIGEN -DHAVE_GLEW -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"x11\\\" -DUSE_OPENMP -D_LINUX_ -Dmyslam_EXPORTS -I/usr/include/suitesparse -I/home/pj/pj/VSLAM_BA_with_eigen/include -isystem /usr/include/eigen3 -isystem /usr/local/include/opencv  -std=c++14 -Wall -fopenmp -g -fPIC   -o CMakeFiles/myslam.dir/dataset.cpp.o -c /home/pj/pj/VSLAM_BA_with_eigen/src/dataset.cpp",
+  "file": "/home/pj/pj/VSLAM_BA_with_eigen/src/dataset.cpp"
+},
+{
+  "directory": "/home/pj/pj/VSLAM_BA_with_eigen/build/src",
+  "command": "/usr/bin/c++  -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -DHAVE_EIGEN -DHAVE_GLEW -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"x11\\\" -DUSE_OPENMP -D_LINUX_ -Dmyslam_EXPORTS -I/usr/include/suitesparse -I/home/pj/pj/VSLAM_BA_with_eigen/include -isystem /usr/include/eigen3 -isystem /usr/local/include/opencv  -std=c++14 -Wall -fopenmp -g -fPIC   -o CMakeFiles/myslam.dir/vertex.cpp.o -c /home/pj/pj/VSLAM_BA_with_eigen/src/vertex.cpp",
+  "file": "/home/pj/pj/VSLAM_BA_with_eigen/src/vertex.cpp"
+},
+{
+  "directory": "/home/pj/pj/VSLAM_BA_with_eigen/build/src",
+  "command": "/usr/bin/c++  -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -DHAVE_EIGEN -DHAVE_GLEW -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"x11\\\" -DUSE_OPENMP -D_LINUX_ -Dmyslam_EXPORTS -I/usr/include/suitesparse -I/home/pj/pj/VSLAM_BA_with_eigen/include -isystem /usr/include/eigen3 -isystem /usr/local/include/opencv  -std=c++14 -Wall -fopenmp -g -fPIC   -o CMakeFiles/myslam.dir/edge.cpp.o -c /home/pj/pj/VSLAM_BA_with_eigen/src/edge.cpp",
+  "file": "/home/pj/pj/VSLAM_BA_with_eigen/src/edge.cpp"
+},
+{
+  "directory": "/home/pj/pj/VSLAM_BA_with_eigen/build/src",
+  "command": "/usr/bin/c++  -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -DHAVE_EIGEN -DHAVE_GLEW -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"x11\\\" -DUSE_OPENMP -D_LINUX_ -Dmyslam_EXPORTS -I/usr/include/suitesparse -I/home/pj/pj/VSLAM_BA_with_eigen/include -isystem /usr/include/eigen3 -isystem /usr/local/include/opencv  -std=c++14 -Wall -fopenmp -g -fPIC   -o CMakeFiles/myslam.dir/problem.cpp.o -c /home/pj/pj/VSLAM_BA_with_eigen/src/problem.cpp",
+  "file": "/home/pj/pj/VSLAM_BA_with_eigen/src/problem.cpp"
+},
+{
+  "directory": "/home/pj/pj/VSLAM_BA_with_eigen/build/app",
+  "command": "/usr/bin/c++  -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -DHAVE_EIGEN -DHAVE_GLEW -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"x11\\\" -DUSE_OPENMP -D_LINUX_ -I/usr/include/suitesparse -I/home/pj/pj/VSLAM_BA_with_eigen/include -isystem /usr/include/eigen3 -isystem /usr/local/include/opencv  -std=c++14 -Wall -fopenmp -g   -o CMakeFiles/testMonoBA.dir/testMonoBA.cpp.o -c /home/pj/pj/VSLAM_BA_with_eigen/app/testMonoBA.cpp",
+  "file": "/home/pj/pj/VSLAM_BA_with_eigen/app/testMonoBA.cpp"
+},
+{
+  "directory": "/home/pj/pj/VSLAM_BA_with_eigen/build/app",
+  "command": "/usr/bin/c++  -DFMT_LOCALE -DGFLAGS_IS_A_DLL=0 -DHAVE_EIGEN -DHAVE_GLEW -DHAVE_PYTHON -DPANGO_DEFAULT_WIN_URI=\\\"x11\\\" -DUSE_OPENMP -D_LINUX_ -I/usr/include/suitesparse -I/home/pj/pj/VSLAM_BA_with_eigen/include -isystem /usr/include/eigen3 -isystem /usr/local/include/opencv  -std=c++14 -Wall -fopenmp -g   -o CMakeFiles/run_kitti_stereo.dir/run_kitti_stereo.cpp.o -c /home/pj/pj/VSLAM_BA_with_eigen/app/run_kitti_stereo.cpp",
+  "file": "/home/pj/pj/VSLAM_BA_with_eigen/app/run_kitti_stereo.cpp"
+}
+]

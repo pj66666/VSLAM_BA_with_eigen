@@ -38,8 +38,8 @@ void Backend::BackendLoop() {
         /// 后端仅优化激活的Frames和Landmarks
         Map::KeyframesType active_kfs = map_->GetActiveKeyFrames();
         Map::LandmarksType active_landmarks = map_->GetActiveMapPoints();
-        // Optimize(active_kfs, active_landmarks);
-        Optimize_only_with_eigen(active_kfs, active_landmarks);
+        Optimize(active_kfs, active_landmarks);
+        // Optimize_only_with_eigen(active_kfs, active_landmarks);
     }
 }
 
@@ -195,6 +195,7 @@ void Backend::Optimize(Map::KeyframesType &keyframes,
     auto solver = new g2o::OptimizationAlgorithmLevenberg(
         g2o::make_unique<BlockSolverType>(
             g2o::make_unique<LinearSolverType>()));
+    
     g2o::SparseOptimizer optimizer;
     optimizer.setAlgorithm(solver);
 

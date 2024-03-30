@@ -1,10 +1,11 @@
 #include <iostream>
 #include <fstream>
 #include <eigen3/Eigen/Dense>
+#include <Eigen/Sparse>
 #include <glog/logging.h>
 #include "myslam/problem.h"
 #include "myslam/tic_toc.h"
-
+#include "myslam/g2o_types.h"
 #ifdef USE_OPENMP
 
 #include <omp.h>
@@ -306,6 +307,8 @@ void Problem::MakeHessian() {
         // 因为对一个优化变量的雅可比就是一个矩阵了，所以对所有优化变量的雅可比用vector来统计
         assert(jacobians.size() == verticies.size());   // std::vector<MatXX>大小应该是与顶点数相同的
         // cout << verticies.size() << endl;
+        
+        #pragma omp parallel for
         for (size_t i = 0; i < verticies.size(); ++i) {
             auto v_i = verticies[i];            // edge对应第一个顶点是路标点，第二个是位姿
             if (v_i->IsFixed()) continue;    // Hessian 里不需要添加它的信息，也就是它的雅克比为 0
@@ -314,10 +317,10 @@ void Problem::MakeHessian() {
             ulong index_i = v_i->OrderingId();
             ulong dim_i = v_i->LocalDimension();
 
-            int m = jacobian_i.rows();  // jacobian_i 的行数    2
-            int n = jacobian_i.cols();  // jacobian_i 的列数    3
-            int p = edge.second->Information().rows();  // Information 矩阵的行数   2
-            int q = edge.second->Information().cols();  // Information 矩阵的列数   2
+            // int m = jacobian_i.rows();  // jacobian_i 的行数    2
+            // int n = jacobian_i.cols();  // jacobian_i 的列数    3
+            // int p = edge.second->Information().rows();  // Information 矩阵的行数   2
+            // int q = edge.second->Information().cols();  // Information 矩阵的列数   2
 
             MatXX JtW = jacobian_i.transpose() * edge.second->Information();    // 3*2
             for (size_t j = i; j < verticies.size(); ++j) {
@@ -367,66 +370,143 @@ void Problem::MakeHessian() {
  * Solve Hx = b, we can use PCG iterative method or use sparse Cholesky
  */
 void Problem::SolveLinearSystem() {
+    // typedef g2o::BlockSolver_6_3 BlockSolverType;
+    // typedef g2o::LinearSolverCSparse<BlockSolverType::PoseMatrixType>
+    //     LinearSolverType;
+    // auto solver = new g2o::OptimizationAlgorithmLevenberg(
+    //     g2o::make_unique<BlockSolverType>(
+    //         g2o::make_unique<LinearSolverType>()));
 
-    if (problemType_ == ProblemType::GENERIC_PROBLEM) {
-
-        // 非 SLAM 问题直接求解
-        // PCG solver
+    
+    // MatXX H = Hessian_;
+    // for (ulong i = 0; i < Hessian_.cols(); ++i) {
+    //     H(i, i) += currentLambda_;
+    // }
+    // delta_x_ = H.ldlt().solve(b_);   
+        
         MatXX H = Hessian_;
         for (ulong i = 0; i < Hessian_.cols(); ++i) {
             H(i, i) += currentLambda_;
         }
-//        delta_x_ = PCGSolver(H, b_, H.rows() * 2);
-        delta_x_ = Hessian_.inverse() * b_;
 
-    } else {
+        // 将稠密矩阵转换为稀疏矩阵
+        Eigen::SparseMatrix<double> H_sparse = H.sparseView();
 
-        // SLAM 问题采用舒尔补的计算方式
-        // step1: schur marginalization --> Hpp, bpp
-        int reserve_size = ordering_poses_;
-        int marg_size = ordering_landmarks_;
+        // 使用共轭梯度法求解线性方程
+        Eigen::ConjugateGradient<Eigen::SparseMatrix<double> > cg;
+        cg.compute(H_sparse);
+        delta_x_ = cg.solve(b_);
 
-        MatXX Hmm = Hessian_.block(reserve_size,reserve_size, marg_size, marg_size);
-        MatXX Hpm = Hessian_.block(0,reserve_size, reserve_size, marg_size);
-        MatXX Hmp = Hessian_.block(reserve_size,0, marg_size, reserve_size);
+
+    /************************************************/
+    // MatXX H = Hessian_;
+    // for (ulong i = 0; i < Hessian_.cols(); ++i) {
+    //     H(i, i) += currentLambda_;
+    // }
+    // delta_x_ = H.ldlt().solve(b_);
+
+    /**************************************************************/
+    // if (problemType_ == ProblemType::GENERIC_PROBLEM) {
+    //     // 非 SLAM 问题直接求解
+    //     // 使用Cholesky分解进行求解
+    //     MatXX H = Hessian_;
+    //     for (ulong i = 0; i < Hessian_.cols(); ++i) {
+    //         H(i, i) += currentLambda_;
+    //     }
+    //     delta_x_ = H.ldlt().solve(b_);
+    // } else {
+    //     // SLAM 问题采用舒尔补的计算方式
+    //     // step1: schur marginalization --> Hpp, bpp
+    //     int reserve_size = ordering_poses_;
+    //     int marg_size = ordering_landmarks_;
+
+    //     MatXX Hmm = Hessian_.block(reserve_size,reserve_size, marg_size, marg_size);
+    //     MatXX Hpm = Hessian_.block(0,reserve_size, reserve_size, marg_size);
+    //     MatXX Hmp = Hessian_.block(reserve_size,0, marg_size, reserve_size);
         
-        // 注意这不是行列索引，对于列向量，segment这里指的是起始值
-        VecX bpp = b_.segment(0,reserve_size);
-        VecX bmm = b_.segment(reserve_size,marg_size);
+    //     VecX bpp = b_.segment(0,reserve_size);
+    //     VecX bmm = b_.segment(reserve_size,marg_size);
 
-        // Hmm 是对角线矩阵，它的求逆可以直接为对角线块分别求逆，如果是逆深度，对角线块为1维的，则直接为对角线的倒数，这里可以加速
-        MatXX Hmm_inv(MatXX::Zero(marg_size, marg_size));
-        for (auto landmarkVertex : idx_landmark_vertices_) {
-            int idx = landmarkVertex.second->OrderingId() - reserve_size;
-            int size = landmarkVertex.second->LocalDimension();     // 3*3
-            Hmm_inv.block(idx, idx, size, size) = Hmm.block(idx, idx, size, size).inverse();
-        }
+    //     // 使用Cholesky分解对Hmm进行求解
+    //     MatXX Hmm_inv = Hmm.llt().solve(MatXX::Identity(marg_size, marg_size));
 
-        MatXX tempH = Hpm * Hmm_inv;
-        H_pp_schur_ = Hessian_.block(0,0,reserve_size,reserve_size) - tempH * Hmp;
-        b_pp_schur_ = bpp - tempH * bmm;
+    //     MatXX tempH = Hpm * Hmm_inv;
+    //     H_pp_schur_ = Hessian_.block(0,0,reserve_size,reserve_size) - tempH * Hmp;
+    //     b_pp_schur_ = bpp - tempH * bmm;
 
+    //     // step2: solve Hpp * delta_x = bpp
+    //     VecX delta_x_pp = H_pp_schur_.ldlt().solve(b_pp_schur_);
+    //     delta_x_.head(reserve_size) = delta_x_pp;
 
-        // step2: solve Hpp * delta_x = bpp
-        VecX delta_x_pp(VecX::Zero(reserve_size));
-        // PCG Solver
-        for (ulong i = 0; i < ordering_poses_; ++i) {
-            H_pp_schur_(i, i) += currentLambda_;
-        }
-
-        int n = H_pp_schur_.rows() * 2;                       // 迭代次数
-        delta_x_pp = PCGSolver(H_pp_schur_, b_pp_schur_, n);  
-        delta_x_.head(reserve_size) = delta_x_pp;
-        //        std::cout << delta_x_pp.transpose() << std::endl;
-
-        // step3: solve landmark
-        VecX delta_x_ll(marg_size);
-        delta_x_ll = Hmm_inv * (bmm - Hmp * delta_x_pp);
-        delta_x_.tail(marg_size) = delta_x_ll;
-
-    }
-
+    //     // step3: solve landmark
+    //     VecX delta_x_ll = Hmm_inv * (bmm - Hmp * delta_x_pp);
+    //     delta_x_.tail(marg_size) = delta_x_ll;
+    // }
 }
+
+
+
+// void Problem::SolveLinearSystem() {
+
+//     if (problemType_ == ProblemType::GENERIC_PROBLEM) {
+
+//         // 非 SLAM 问题直接求解
+//         // PCG solver
+//         MatXX H = Hessian_;
+//         for (ulong i = 0; i < Hessian_.cols(); ++i) {
+//             H(i, i) += currentLambda_;
+//         }
+// //        delta_x_ = PCGSolver(H, b_, H.rows() * 2);
+//         delta_x_ = Hessian_.inverse() * b_;
+
+//     } else {
+
+//         // SLAM 问题采用舒尔补的计算方式
+//         // step1: schur marginalization --> Hpp, bpp
+//         int reserve_size = ordering_poses_;
+//         int marg_size = ordering_landmarks_;
+
+//         MatXX Hmm = Hessian_.block(reserve_size,reserve_size, marg_size, marg_size);
+//         MatXX Hpm = Hessian_.block(0,reserve_size, reserve_size, marg_size);
+//         MatXX Hmp = Hessian_.block(reserve_size,0, marg_size, reserve_size);
+        
+//         // 注意这不是行列索引，对于列向量，segment这里指的是起始值
+//         VecX bpp = b_.segment(0,reserve_size);
+//         VecX bmm = b_.segment(reserve_size,marg_size);
+
+//         // Hmm 是对角线矩阵，它的求逆可以直接为对角线块分别求逆，如果是逆深度，对角线块为1维的，则直接为对角线的倒数，这里可以加速
+//         MatXX Hmm_inv(MatXX::Zero(marg_size, marg_size));
+//         for (auto landmarkVertex : idx_landmark_vertices_) {
+//             int idx = landmarkVertex.second->OrderingId() - reserve_size;
+//             int size = landmarkVertex.second->LocalDimension();     // 3*3
+//             Hmm_inv.block(idx, idx, size, size) = Hmm.block(idx, idx, size, size).inverse();
+//         }
+
+//         MatXX tempH = Hpm * Hmm_inv;
+//         H_pp_schur_ = Hessian_.block(0,0,reserve_size,reserve_size) - tempH * Hmp;
+//         b_pp_schur_ = bpp - tempH * bmm;
+
+
+//         // step2: solve Hpp * delta_x = bpp
+//         VecX delta_x_pp(VecX::Zero(reserve_size));
+//         // PCG Solver
+//         for (ulong i = 0; i < ordering_poses_; ++i) {
+//             H_pp_schur_(i, i) += currentLambda_;
+//         }
+
+//         int n = H_pp_schur_.rows() * 2;                       // 迭代次数
+//         delta_x_pp = PCGSolver(H_pp_schur_, b_pp_schur_, n);  
+//         delta_x_.head(reserve_size) = delta_x_pp;
+//         //        std::cout << delta_x_pp.transpose() << std::endl;
+
+//         // step3: solve landmark
+//         VecX delta_x_ll(marg_size);
+//         delta_x_ll = Hmm_inv * (bmm - Hmp * delta_x_pp);
+//         delta_x_.tail(marg_size) = delta_x_ll;
+
+//     }
+
+// }
 
 void Problem::UpdateStates() {
     for (auto vertex: verticies_) {
