@@ -1,5 +1,5 @@
 # 1 实际效果
-具体见demo视频
+具体见demo视频，或见[b站](https://www.bilibili.com/video/BV1zm411674H/?spm_id_from=333.999.0.0&vd_source=438c2789bdab12c1ebe1b2b8e0caaeaa)
 ![image](https://github.com/pj66666/VSLAM_BA_with_eigen/assets/68932539/7c487517-6f84-418a-bd29-98d9be2c57c8)
 
 # 2 问题
